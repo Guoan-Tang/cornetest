@@ -19,7 +19,7 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-#define LAYER_SYNC_BEHAVIOR_NAME "layer_sync"
+#define LAYER_SYNC_BEHAVIOR_NAME "lyrsync"
 
 /* Keep in sync with layer order in config/corne.keymap. */
 static const char *const layer_names[] = {

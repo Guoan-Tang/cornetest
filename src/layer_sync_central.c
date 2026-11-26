@@ -10,9 +10,8 @@
 
 LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 
-#define LAYER_SYNC_BEHAVIOR_NAME "layer_sync"
+#define LAYER_SYNC_BEHAVIOR_NAME "lyrsync"
 
-static uint8_t last_sent_layer = UINT8_MAX;
 static bool peripheral_seen;
 
 static void layer_sync_work_cb(struct k_work *work) {
@@ -33,17 +32,13 @@ static void layer_sync_work_cb(struct k_work *work) {
     for (uint8_t src = 0; src < ZMK_SPLIT_CENTRAL_PERIPHERAL_COUNT; src++) {
         zmk_split_central_invoke_behavior(src, &binding, event, true);
     }
-
-    last_sent_layer = layer;
 }
 
 K_WORK_DEFINE(layer_sync_work, layer_sync_work_cb);
 
 static int layer_sync_central_listener(const zmk_event_t *eh) {
     if (as_zmk_layer_state_changed(eh) != NULL) {
-        if (zmk_keymap_highest_layer_active() != last_sent_layer) {
-            k_work_submit(&layer_sync_work);
-        }
+        k_work_submit(&layer_sync_work);
         return ZMK_EV_EVENT_BUBBLE;
     }
 

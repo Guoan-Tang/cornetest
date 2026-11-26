@@ -1,0 +1,10 @@
+config CORNE_CUSTOM_STATUS_SCREEN
+    bool "Custom Corne status screen (left Blahaj pet + right synced layer)"
+    depends on ZMK_DISPLAY && ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    default y
+    select LV_USE_THEME_MONO
+    select LV_USE_LABEL
+    select LV_USE_IMG
+    select LV_FONT_MONTSERRAT_16
+    select LV_FONT_MONTSERRAT_12
+    select ZMK_WPM if !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
